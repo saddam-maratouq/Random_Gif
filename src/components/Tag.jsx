@@ -1,49 +1,21 @@
-import {useEffect,useState} from 'react' 
-import axios from 'axios'
+import {useState} from 'react' 
+import useGif from '../hook/useGif'
 
 
-const KEY_APP = process.env.REACT_APP_GIF_KEY
 
 
 const Tag = () => { 
 
-    const [tag,SetTag] = useState('cats')  
-    const[gif,setGif] = useState('')  
+    const [tag,SetTag] = useState('')  
+    
+    const {gif,gifData} = useGif(tag)   
 
 
-  const handelTag = (e) => SetTag(e.target.value)
- 
+    // functions 
 
-
- const gifData = async (tag) => {
-
-     const url = `https://api.giphy.com/v1/gifs/random?api_key=${KEY_APP}&tag=${tag}`
-
-     const req = await  axios.get(url)  
-
-     // console.log(req.data.data.images.downsized_large.url)  
-
-     const gifResponse = req.data.data.images.downsized_large.url 
-     
-     setGif(gifResponse)  
- }  
-
-
- useEffect(() => {
- 
-     gifData(tag); 
-
- }, [tag]) 
-
+ const handelTag = (e) => SetTag(e.target.value) 
 
  const handelGif = () =>  gifData(tag);   
-
-
-
- 
- 
-
-
 
 
     return (
